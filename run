@@ -1,0 +1,21 @@
+#!/usr/bin/python3
+import os
+
+print("Image Scraper")
+print("b - Bing Image Scraper")
+print("f - Flickr Image Scraper")
+print("i - Install Dependencies (required before running scrapers)")
+print("Please select an option (b/f/i)")
+opt = input("> ")
+
+if opt == "b":
+    os.system("python3 bing_scraper.py")
+elif opt == "f":
+    os.system("python3 flickr_scraper.py")
+elif opt == "i":
+    os.system("pip install bing-image-downloader")
+    os.system("pip install -U -r requirements.txt")
+    print("Installation complete!")
+else:
+    print("Invalid option. Please enter b, f, or i.")
+exit()

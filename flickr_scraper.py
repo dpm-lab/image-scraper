@@ -8,11 +8,11 @@ from flickrapi import FlickrAPI
 
 from utils.general import download_uri
 
-key = ''  # Flickr API key https://www.flickr.com/services/apps/create/apply
-secret = ''
+key = '3a41e17fdf30303487bb827caadf9ad3'  # Flickr API key https://www.flickr.com/services/apps/create/apply
+secret = '82ce0c92d3ac3c39'
 
 
-def get_urls(search='honeybees on flowers', n=10, download=False):
+def get_urls(search='bulldozers', n=10, download=False):
     t = time.time()
     flickr = FlickrAPI(key, secret)
     license = ()  # https://www.flickr.com/services/api/explore/?method=flickr.photos.licenses.getInfo
@@ -41,28 +41,39 @@ def get_urls(search='honeybees on flowers', n=10, download=False):
                 if download:
                     download_uri(url, dir)
 
-                urls.append(url)
-                print('%g/%g %s' % (i, n, url))
+                # urls.append(url)
+                print('%g/%g %s' % (i+1, n, url))
             except:
                 print('%g/%g error...' % (i, n))
-
+    print("Done! Please check the images folder.")
+    exit()
     # import pandas as pd
     # urls = pd.Series(urls)
     # urls.to_csv(search + "_urls.csv")
-    print('Done. (%.1fs)' % (time.time() - t) + ('\nAll images saved to %s' % dir if download else ''))
+    # print('Done. (%.1fs)' % (time.time() - t) + ('\nAll images saved to %s' % dir if download else ''))
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--search', type=str, default='honeybees on flowers', help='flickr search term')
-    parser.add_argument('--n', type=int, default=10, help='number of images')
-    parser.add_argument('--download', action='store_true', help='download images')
-    opt = parser.parse_args()
+
+    print("Flickr Web Crawler")
+    print("Note: Flickr limits API calls to 3600 per hour. If you exceed this limit, the API key will be blocked for 24 hours.")
+    keyword = input("Enter query string: ")
+    number = input("Number of images: ")
+    print("Ok, please wait...")
+    
+    # parser = argparse.ArgumentParser()
+    # parser.add_argument('--search', type=str, default='honeybees on flowers', help='flickr search term')
+    # parser.add_argument('--n', type=int, default=1, help='number of images')
+    # parser.add_argument('--download', action='store_true', help='download images')
+    # opt = parser.parse_args()
 
     # Check key
     help_url = 'https://www.flickr.com/services/apps/create/apply'
     assert key and secret, f'Flickr API key required in flickr_scraper.py L11-12. To apply visit {help_url}'
 
-    get_urls(search=opt.search,  # search term
-             n=opt.n,  # max number of images
-             download=opt.download)  # download images
+    get_urls(search=keyword,  # search term
+             n=int(number),  # max number of images
+             download=True)  # download images
+
+
+             
